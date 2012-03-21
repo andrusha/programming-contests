@@ -1,3 +1,4 @@
+import Data.Maybe
 import qualified Data.ByteString.Lazy.Char8 as BS
 
 intSqrt :: Int -> Int
@@ -18,11 +19,7 @@ divsum = sum . divisors
 -- -- -- -- -- -- -- -- -- -- --
 
 toInt :: BS.ByteString -> Int
-toInt x =
-	case BS.readInt x of 
-		Just (i,_) -> i
-		Nothing    -> error "Unparsable Int"
+toInt = fst . fromJust . BS.readInt
 
-main = do
-	input <- BS.getContents
-	mapM_ (putStrLn . show) $ map (divsum . toInt) . tail . BS.lines $ input
+main = BS.getContents
+	   >>= (putStr . unlines . map (show . divsum . toInt) . tail . BS.lines)
