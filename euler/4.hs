@@ -13,9 +13,9 @@ palindromes = [x*100000 + y*10000 + z*1000 + z*100 + y*10 + x | x <- [9,8..1], y
 -- O(n) = 1000
 threeFactors' x 1000 = False
 threeFactors' x y = x `mod` y == 0
-					&& between (x `div` y) 100 999 
-					|| threeFactors' x (y + 1)
-	where between x y z = y <= x && x <= z
+                    && between (x `div` y) 100 999 
+                    || threeFactors' x (y + 1)
+    where between x y z = y <= x && x <= z
 
 threeFactors x = threeFactors' x 100
 

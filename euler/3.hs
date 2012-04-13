@@ -15,11 +15,11 @@ primeFactors n | n > 1 = go n primes
 primes = 2 : filter isPrime [3,5..]
 
 oddSqrt n = if odd x then x else x - 1
-	where x = ceiling . sqrt $ fromIntegral n
+    where x = ceiling . sqrt $ fromIntegral n
 
 isFactor x y = x `mod` y == 0
 
 lrgstPrimeFactor x = head . dropWhile (not . gotcha) $ [oddSqrt x, oddSqrt x - 2 .. 1]
-	where gotcha y = isFactor x y && isPrime y
+    where gotcha y = isFactor x y && isPrime y
 
 main = putStrLn . show . lrgstPrimeFactor $ 600851475143
