@@ -2,10 +2,8 @@
 -- there are 6 routes (without backtracking) to the bottom right corner.
 -- How many routes are there through a 20x20 grid?
 
-fac n = product [1..n]
+import Numerix (binomial)
 
-binominal n k = (fac n)/((fac k) * (fac (n - k)))
-
-paths n = binominal (2*n) n
+paths n = binomial (2*n) n
 
 main = print $ paths 20
