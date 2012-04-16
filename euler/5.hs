@@ -20,7 +20,7 @@ primesToG m = 2 : sieve [3,5..m]  where
        | p*p > m   = p : xs
        | otherwise = p : sieve (xs `minus` [p*p, p*p+2*p..])
 
-maxPower x y = ceiling $ x ** (fromIntegral . floor $ logBase x y)
+maxPower x y = x ^ (floor $ logBase x y)
 
 answer x = product . map (flip maxPower x) . primesToG $ x
 
