@@ -2,7 +2,7 @@
 -- which are proved to be useful in Project Euler
 -- or that kind of programming contest
 
-module Numerix (fibonacci, collatz, amicable, primes, factorial, binomial, factors, primeFactors) where
+module Numerix (fibonacci, collatz, amicable, abundant, primes, factorial, binomial, factors, primeFactors) where
 
 -- Fibonacci numbers as an infinite list
 fibonacci = 1 : 2 : zipWith (+) fibonacci (tail fibonacci)
@@ -16,7 +16,6 @@ collatz n
 
 -- Amicable number pairs
 amicable = amicable' 1
-
 amicable' n
 	| ds > n && (divsum . divsum) n == n = (n, ds) : amicable' (n+1)
 	| otherwise 						 =           amicable' (n+1)
@@ -24,6 +23,13 @@ amicable' n
 		ds 	   = divsum n
 		divsum = sum . factors
 
+-- Abundant numbers
+abundant = abundant' 12
+abundant' n
+	| divsum n > n = n : abundant' (succ n)
+	| otherwise    =     abundant' (succ n)
+	where
+		divsum = sum . factors
 
 -- Prime numbers generator, based on sieve
 minus (x:xs) (y:ys) = case (compare x y) of 
