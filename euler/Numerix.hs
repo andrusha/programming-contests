@@ -2,7 +2,10 @@
 -- which are proved to be useful in Project Euler
 -- or that kind of programming contest
 
-module Numerix (fibonacci, collatz, amicable, abundant, primes, factorial, binomial, factors, primeFactors) where
+module Numerix (fibonacci, collatz, amicable, abundant, primes, factorial, binomial, factors, primeFactors, bisect) where
+
+import Data.Array (listArray, (!), indices)
+import Data.Maybe (Maybe (Nothing, Just))
 
 -- Fibonacci numbers as an infinite list
 fibonacci = 1 : 2 : zipWith (+) fibonacci (tail fibonacci)
@@ -38,6 +41,7 @@ minus (x:xs) (y:ys) = case (compare x y) of
            GT ->     minus (x:xs)  ys
 minus  xs     _     = xs
 
+primes :: [Int]
 primes = 2 : primes'
   where 
     primes' = sieve [3,5..] 9 primes'
@@ -82,3 +86,25 @@ primeFactors n
 		        | p*p > n        = [n]
 		        | n `rem` p == 0 =  p : go (n `quot` p) ps
 		        | otherwise      =      go n ps'
+
+-- Array bisection (binary search)
+bisect arr n = bisect' arr n start end
+	where 
+		start = (head . indices) arr
+		end   = (last . indices) arr
+
+bisect' arr n start end
+	| start >= end     = Nothing
+	| end - start == 1 = checkCorners start end
+	| found == n       = Just center
+	| found >  n       = bisect' arr n start  center
+	| found <  n       = bisect' arr n center end
+	| otherwise        = Nothing
+	where
+		center = start + ((end - start) `div` 2)
+		found  = arr ! center
+		checkCorners x y
+			| (arr ! x) == n ||
+			  (arr ! y) == n = Just n
+			| otherwise      = Nothing
+

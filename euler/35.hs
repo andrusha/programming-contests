@@ -3,38 +3,14 @@
 --
 -- How many circular primes are there below one million?
 
-import Data.List (permutations)
-import Data.Array (Array, listArray, (!), indices, Ix)
+import Data.Array (listArray)
 import Data.Maybe (Maybe (Nothing, Just))
-import Numerix (primes)
-
-import Debug.Trace
+import Numerix    (primes, bisect)
 
 primeArr = listArray (0, len - 1) x
 	where
 		x   = takeWhile (< 10^6) primes
 		len = length x
-
-bisect arr n = bisect' arr n start end
-	where 
-		start = (head . indices) arr
-		end   = (last . indices) arr
-
-bisect' arr n start end
-	| start >= end     = Nothing
-	| end - start == 1 = checkCorners start end
-	| found == n       = Just center
-	| found >  n       = bisect' arr n start  center
-	| found <  n       = bisect' arr n center end
-	| otherwise        = Nothing
-	where
-		--center = trace ((show start) ++ "\t" ++ (show end)) (start + ((end - start) `div` 2))
-		center = start + ((end - start) `div` 2)
-		found  = arr ! center
-		checkCorners x y
-			| (arr ! x) == n ||
-			  (arr ! y) == n = Just n
-			| otherwise      = Nothing
 
 digits :: Integral a => a -> [a]
 digits 0 = []
