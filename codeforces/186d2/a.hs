@@ -15,7 +15,9 @@ equal :: Char -> Char -> (Bool, (Char, Char))
 equal x y = (x == y, (x, y))
 
 cmp :: String -> String -> Bool
-cmp a b = isOk . filter (not . fst) $ zipWith equal a b
+cmp a b
+    | length a == length b = isOk . filter (not . fst) $ zipWith equal a b
+    | otherwise            = False
 
 boolToStr :: Bool -> String
 boolToStr x = if x then "YES" else "NO"
