@@ -24,4 +24,4 @@ main = do
 	let (n:t1:t2:k:[]) = map read . words $ tmp
 	gnomeTmp <- getContents
 	let gnomes = map (toTuple . map read . words) . lines $ gnomeTmp
-	putStrLn . unlines . map showGnome $ answer t1 t2 (k/100) gnomes
+	putStrLn . unlines . map showGnome $ answer t1 t2 (1 - k/100) gnomes
