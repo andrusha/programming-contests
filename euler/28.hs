@@ -22,4 +22,4 @@ sqrNumbers = map divide $ zip oddSqrs (tail oddSqrs)
 
 answer n = succ . sum . concat . take (n `div` 2) $ sqrNumbers
 
-main = зкште $ answer 1001
+main = print $ answer 1001
